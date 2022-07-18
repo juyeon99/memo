@@ -32,6 +32,8 @@ public class TestController {
 	// 3. jsp 연동 확인
 	@RequestMapping("/test/3")
 	public String test3() {
-		return "test/test";
+//		return "test/test";
+		return "template/layout";
 	}
+	
 }
