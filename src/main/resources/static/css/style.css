@@ -13,4 +13,5 @@ footer{height:100px; background-color: #c9c9c9;}
 
 .table th{background-color: #e0e0e0;}
 .table td{}
-.btn{margin:auto; margin:50px;}
+form .sign-in-btn{margin:auto; margin:50px;}
+
