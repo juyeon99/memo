@@ -15,4 +15,51 @@
         FROM
             `user`
     </select>
+    
+    <select id="existLoginId" parameterType="string" resultType="boolean">
+        SELECT
+            COUNT(*)	<!-- COUNT(*)가 0이면 false, 1이상이면 true 리턴 -->
+        FROM
+            `user`
+        WHERE
+        	`loginId` = #{loginId}
+    </select>
+    
+    <insert id="insertUser" parameterType="map">
+    	INSERT INTO `user`
+ 		(
+ 			`loginId`
+			,`password`
+			,`name`
+			,`email`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{loginId}
+ 			,#{password}
+ 			,#{name}
+ 			,#{email}
+ 			, NOW()
+ 			, NOW()
+ 		)
+    </insert>
+    
+    <select id="selectUserByLoginId" parameterType="map" resultType="com.memo.user.model.User">
+    	SELECT
+            `id`
+            , `loginId`
+            , `password`
+            , `name`
+			, `email`
+            , `createdAt`
+            , `updatedAt`
+        FROM
+            `user`
+        WHERE
+        	`loginId` = #{loginId}
+       	AND
+       		`password` = #{password}
+    </select>
 </mapper>

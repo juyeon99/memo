@@ -17,5 +17,17 @@ public class UserBO {
 	public List<User> getUserList() {
 		return userDAO.selectUserList();
 	}
+	
+	public boolean existLoginId(String loginId) {
+		return userDAO.existLoginId(loginId);
+	}
+
+	public void addUser(String loginId, String password, String name, String email) {
+		userDAO.insertUser(loginId, password, name, email);
+	}
+
+	public User getUserByLoginId(String loginId, String password) {
+		return userDAO.selectUserByLoginId(loginId,password);
+	}
 
 }
