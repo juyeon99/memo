@@ -25,8 +25,8 @@
 			</div>
 			
 			<%-- btn-block: 로그인 박스 영역에 버튼을 가득 채운다. --%>
-			<a class="btn btn-block btn-dark" href="/user/sign_up_view">회원가입</a>
 			<input type="submit" class="btn btn-block btn-primary" value="로그인">
+			<a class="btn btn-block btn-dark" href="/user/sign_up_view">회원가입</a>
 		</form>
 	</div>
 </div>
@@ -37,31 +37,31 @@ $(document).ready(function(){
 		e.preventDefault();		// submit 중단시킴
 		
 		// validation
-		let loginId = $('input[name=loginId]').val().trim();	// name으로 가져오기
+		let loginId = $('input[name=loginId]').val().trim();
 		if(loginId == ''){
 			alert("아이디를 입력하세요.");
 			return false;	// submit button을 이용할 때는 그냥 return이 아니라 return false;
 		}
 		
-		let password = $('#password').val();					// id로 가져오기
-		let confirmPassword = $('#confirmPassword').val();
-		if(password == '' || confirmPassword == ''){
+		let password = $('#password').val();
+		if(password == ''){
 			alert("비밀번호를 입력하세요.")
 			return false;
 		}
 		
-		let url = $(this).attr("action");	// form 태그에 잇는 action값을 가져옴
-		let params = $(this).serialize();	// form 태그에 들어있는 name 속성 값들을 한 번에 가져옴
+		// AJAX 호출 (이벤트만 submit으로 받고 AJAX로 보냄)
+		let url = $(this).attr("action");	// form 태그에 있는 action 주소(/user/sign_in)를 가져옴	// $(this) = $('#loginForm')
+		let params = $(this).serialize();	// form 태그에 들어있는 name 값들을 query string으로 가져옴
 		
-		$.post(url, params)		// params를 url 주소에 post 방식으로 보냄 (이것도 AJAX방식)
+		$.post(url, params)					// params를 url 주소에 post 방식으로 보냄 (이것도 AJAX방식)
 		.done(function(data){
 			if(data.result == "success"){
 				alert("로그인 되었습니다.");
+				location.href="/post/post_list_view";
 			} else{
-				alert("로그인 실패. 다시 시도해주세요.");
+				alert(data.errorMessage);
 			}
 		});
-		
 	});
 });
 </script>
