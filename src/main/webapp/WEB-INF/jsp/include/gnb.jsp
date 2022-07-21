@@ -6,7 +6,7 @@
 
 <div class="h-100 d-flex justify-content-between align-items-center">
 	<div class="logo">
-		<h1>메모 게시판</h1>
+		<h1 style="color:white; font-weight:bold;">메모 게시판</h1>
 	</div>
 	<div class="login-info ml-4">
 		<!-- 로그인이 되었을 때만(세션에 값이 있을 때만) 보이도록 -->

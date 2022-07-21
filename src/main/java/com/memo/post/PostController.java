@@ -16,4 +16,17 @@ public class PostController {
 		model.addAttribute("viewName", "post/post_list");
 		return "template/layout";
 	}
+	
+	/**
+	 * 글쓰기 화면
+	 * @param model
+	 * @return
+	 */
+	// localhost/post/post_create_view
+	@RequestMapping("/post_create_view")
+	public String postCreateView(Model model) {
+		model.addAttribute("viewName", "post/post_create");
+		return "template/layout";
+	}
+	
 }
