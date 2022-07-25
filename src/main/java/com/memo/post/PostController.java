@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.memo.post.bo.PostBO;
 import com.memo.post.model.Post;
@@ -37,6 +38,25 @@ public class PostController {
 	@RequestMapping("/post_create_view")
 	public String postCreateView(Model model) {
 		model.addAttribute("viewName", "post/post_create");
+		return "template/layout";
+	}
+	
+	/**
+	 * 글 상세 화면
+	 * @param model
+	 * @param postId
+	 * @return
+	 */
+	// localhost/post/post_detail_view
+	@RequestMapping("/post_detail_view")
+	public String postDetailView(Model model,
+			@RequestParam("postId") int postId) {
+		// select db by id
+		Post post = postBO.getPostDetailById(postId);
+		
+		model.addAttribute("viewName", "post/post_detail");
+		model.addAttribute("post", post);
+		
 		return "template/layout";
 	}
 	

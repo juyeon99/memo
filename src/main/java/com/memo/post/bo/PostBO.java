@@ -30,9 +30,29 @@ public class PostBO {
 		// dao insert
 		postDAO.insertPost(userId, subject, content, imagePath);
 	}
+	
+	public void updatePostById(int id, String userLoginId, String subject, String content, MultipartFile file) {
+		String imagePath = null;
+		
+		// file이 있으면 file 업로드 => image path 리턴 받음
+		if(file != null) {
+			imagePath = fileManager.saveFile(userLoginId, file);
+		}
+		
+		// dao update
+		postDAO.updatePostById(id, subject, content, imagePath);
+	}
 
 	public List<Post> getPostList(int userId) {
 		return postDAO.selectPostList(userId);
+	}
+
+	public Post getPostDetailById(int id) {
+		return postDAO.selectPostDetailById(id);
+	}
+
+	public void deletePostById(int id) {
+		postDAO.deletePostById(id);
 	}
 	
 }
