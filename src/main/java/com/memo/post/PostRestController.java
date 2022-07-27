@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,14 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 	
+	/**
+	 * 메모 글쓰기 API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String,Object> create(
 			@RequestParam("subject") String subject,
@@ -50,7 +59,16 @@ public class PostRestController {
 		return result;
 	}
 	
-	@PostMapping("/update")
+	/**
+	 * 글 수정 API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param postId
+	 * @param session
+	 * @return
+	 */
+	@PutMapping("/update")
 	public Map<String,Object> update(
 			@RequestParam("subject") String subject,
 			@RequestParam("content") String content,
@@ -70,11 +88,14 @@ public class PostRestController {
 		}
 		
 		// 로그인 되어있음
-//		int userId = (int) userIdObj;
+		int userId = (int) userIdObj;
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// 글쓰기 db update
-		postBO.updatePostById(postId, userLoginId, subject, content, file);
+		int row = postBO.updatePost(userId, userLoginId, postId, subject, content, file);
+		if(row < 1) {
+			result.put("result", "failed");
+		}
 		
 		return result;
 	}
@@ -84,6 +105,9 @@ public class PostRestController {
 			@RequestParam("deleteId") int id){
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");
+		
+		// image 파일 삭제
+		
 		
 		postBO.deletePostById(id);
 		

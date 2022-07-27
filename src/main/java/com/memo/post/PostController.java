@@ -52,7 +52,7 @@ public class PostController {
 	public String postDetailView(Model model,
 			@RequestParam("postId") int postId) {
 		// select db by id
-		Post post = postBO.getPostDetailById(postId);
+		Post post = postBO.getPostById(postId);
 		
 		model.addAttribute("viewName", "post/post_detail");
 		model.addAttribute("post", post);

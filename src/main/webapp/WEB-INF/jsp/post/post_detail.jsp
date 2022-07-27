@@ -25,7 +25,7 @@
 			<button type="button" id="deleteBtn" class="btn btn-secondary">삭제</button>
 			<div>
 				<a href="/post/post_list_view" class="btn btn-dark">목록으로</a>
-				<button type="button" id="saveBtn" class="btn btn-info">수정</button>
+				<button type="button" id="saveBtn" class="btn btn-info" data-post-id="${post.id}">수정</button>
 			</div>
 		</div>
 	</div>
@@ -83,9 +83,10 @@ $(document).ready(function(){
 			}
 		}
 		
-		let postId = $('#postId').val();
+		// let postId = $('#postId').val();
+		let postId = $(this).data("post-id");
 		
-		// form 태그를 자바스크립트에서 만든다.
+		// form 태그를 자바스크립트에서 만든다. (이미지 보낼 때는 항상 form으로)
 		let formData = new FormData();
 		formData.append("subject", subject);	// <input type="" name="subject">
 		formData.append("content", content);
@@ -95,18 +96,19 @@ $(document).ready(function(){
 		// AJAX form 데이터 전송
 		$.ajax({
 			// request
-			type: "POST"
+			type: "PUT"
 			,url: "/post/update"
 			,data: formData
-			,encType: "multipart/form-data"	// file 업로드 필수 설정
-			,processData: false				// file 업로드 필수 설정 (이미지 파일이므로 data를 string으로 변환하지 않하게 함)
-			,contentType: false				// file 업로드 필수 설정
+			,encType: "multipart/form-data"	// image file 업로드 필수 설정
+			,processData: false				// image file 업로드 필수 설정 (이미지 파일이므로 data를 string으로 변환하지 않하게 함)
+			,contentType: false				// image file 업로드 필수 설정
 			
 			// response
 			,success: function(data){
 				if(data.result == "success"){
 					alert("메모가 수정되었습니다.");
-					location.href = "/post/post_list_view";
+					// location.href = "/post/post_list_view";
+					location.reload(true);
 				} else{
 					alert(data.errorMessage);
 				}

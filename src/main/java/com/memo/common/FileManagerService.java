@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component		// Controller, service, repository
 public class FileManagerService {
 	public final static String FILE_UPLOAD_PATH = "D:\\web_dev_juyeon\\spring_project\\memo\\workspace\\images/";	// workspace 밖에 위치해서 git 영향X
+//	public final static String FILE_UPLOAD_PATH = "/Users/jenniferhong/OneDrive/spring/sns/images/";	// on MAC
 	
 	// input: MultipartFile, userLoginId
 	// output: String path
@@ -47,5 +48,22 @@ public class FileManagerService {
 		}
 		
 		return null;
+	}
+	
+	public void deleteFile(String imagePath) throws IOException/*예외처리는 BO가 하게끔*/ {
+		// imagePath ex) /images/aaaa_1658476346834/image_icon.png
+		// D:\\web_dev_juyeon\\spring_project\\memo\\workspace\\images/aaaa_1658476346834/image_icon.png
+		// 전체 경로와 imagePath간의 중복되는 문자열을(/images/) 제거한 후 실제 저장 경로를 찾는다.
+		imagePath = imagePath.replace("/images/", "");	// aaaa_1658476346834/image_icon.png
+		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath);
+		if(Files.exists(path)) {	// 이미지 파일이 존재하면 삭제
+			Files.delete(path);
+		}
+		
+		// Directory(Folder) 삭제
+		path = path.getParent();	// path의 부모 폴더
+		if(Files.exists(path)) {	// 폴더가 존재하면 삭제
+			Files.delete(path);
+		}
 	}
 }
