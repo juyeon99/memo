@@ -84,6 +84,7 @@ $(document).ready(function(){
 					location.href = "/post/post_list_view";
 				} else{
 					alert(data.errorMessage);
+					location.href = "/user/sign_in_view";
 				}
 			}
 			,error: function(e){

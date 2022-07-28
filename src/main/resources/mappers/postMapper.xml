@@ -69,11 +69,12 @@
  			AND	`userId` = #{userId}
  	</update>
  	
- 	<delete id="deletePostById" parameterType="int">
+ 	<delete id="deletePostByPostIdAndUserId" parameterType="map">
  		DELETE
 		FROM
 			`post`
 		WHERE
-			`id` = #{id}
+			`id` = #{postId}
+			AND	`userId` = #{userId}
  	</delete>
  </mapper>

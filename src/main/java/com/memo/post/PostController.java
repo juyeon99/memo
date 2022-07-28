@@ -23,9 +23,15 @@ public class PostController {
 	// localhost/post/post_list_view
 	@RequestMapping("/post_list_view")
 	public String postListView(Model model, HttpSession session) {
-		List<Post> postList = postBO.getPostList((int)session.getAttribute("userId"));
-		model.addAttribute("postList",postList);
-		model.addAttribute("viewName", "post/post_list");
+		Object userIdObj = session.getAttribute("userId");
+		if(userIdObj == null) {	// 로그인 되어있지 않음
+			model.addAttribute("viewName", "user/login");
+		} else {
+			List<Post> postList = postBO.getPostList((int)userIdObj);
+			
+			model.addAttribute("postList",postList);
+			model.addAttribute("viewName", "post/post_list");
+		}
 		return "template/layout";
 	}
 	
@@ -50,13 +56,17 @@ public class PostController {
 	// localhost/post/post_detail_view
 	@RequestMapping("/post_detail_view")
 	public String postDetailView(Model model,
-			@RequestParam("postId") int postId) {
-		// select db by id
-		Post post = postBO.getPostById(postId);
-		
-		model.addAttribute("viewName", "post/post_detail");
-		model.addAttribute("post", post);
-		
+			@RequestParam("postId") int postId, 
+			HttpSession session) {
+		if(session.getAttribute("userId") == null) {	// 로그인 되어있지 않음
+			model.addAttribute("viewName", "user/login");
+		} else {
+			// select db by id
+			Post post = postBO.getPostById(postId);
+			
+			model.addAttribute("viewName", "post/post_detail");
+			model.addAttribute("post", post);
+		}
 		return "template/layout";
 	}
 	

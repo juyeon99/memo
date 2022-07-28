@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<input type="text" id="postId" class="form-control d-none" value="${post.id}">
+<%-- <input type="text" id="postId" class="form-control d-none" value="${post.id}"> --%>
 <div class="d-flex justify-content-center m-3">
 	<div class="w-50">
 		<h1>글 상세/수정/삭제</h1>
@@ -22,7 +22,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-secondary">삭제</button>
+			<button type="button" id="deleteBtn" class="btn btn-secondary" data-post-id="${post.id}">삭제</button>
 			<div>
 				<a href="/post/post_list_view" class="btn btn-dark">목록으로</a>
 				<button type="button" id="saveBtn" class="btn btn-info" data-post-id="${post.id}">수정</button>
@@ -34,11 +34,12 @@
 <script>
 $(document).ready(function(){
 	$('#deleteBtn').on('click',function(){
-		let postId = $('#postId').val();
+		// let postId = $('#postId').val();
+		let postId = $(this).data("post-id");
 		
 		$.ajax({
 			// request
-			type: "POST"
+			type: "DELETE"
 			,url: "/post/delete"
 			,data: {"deleteId":postId}
 			

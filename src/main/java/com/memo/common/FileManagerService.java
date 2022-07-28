@@ -51,10 +51,10 @@ public class FileManagerService {
 	}
 	
 	public void deleteFile(String imagePath) throws IOException/*예외처리는 BO가 하게끔*/ {
-		// imagePath ex) /images/aaaa_1658476346834/image_icon.png
-		// D:\\web_dev_juyeon\\spring_project\\memo\\workspace\\images/aaaa_1658476346834/image_icon.png
+		// imagePath ex) /images/userid_189643326/image.jpg
+		// D:\\web_dev_juyeon\\spring_project\\memo\\workspace\\images/userid_189643326/image.jpg
 		// 전체 경로와 imagePath간의 중복되는 문자열을(/images/) 제거한 후 실제 저장 경로를 찾는다.
-		imagePath = imagePath.replace("/images/", "");	// aaaa_1658476346834/image_icon.png
+		imagePath = imagePath.replace("/images/", "");	// userid_189643326/image.jpg
 		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath);
 		if(Files.exists(path)) {	// 이미지 파일이 존재하면 삭제
 			Files.delete(path);
